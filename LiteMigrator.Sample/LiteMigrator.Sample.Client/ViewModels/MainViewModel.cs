@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using DryIoc;
+﻿using System;
+using System.Reflection;
 using LiteMigrator.Sample.Client.Services;
 using Prism.Commands;
 using Prism.Navigation;
@@ -45,51 +45,76 @@ namespace LiteMigrator.Sample.Client.ViewModels
     {
       base.Initialize(parameters);
 
-      ErrorMessage = string.Empty;
-      LatestVersion = string.Empty;
+      //ErrorMessage = string.Empty;
+      //LatestVersion = string.Empty;
 
-      var dbPath = ":memory:";
-      var resourceAssembly = Assembly.GetExecutingAssembly();
-      var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
+      //var dbPath = ":memory:";
+      //var resourceAssembly = Assembly.GetExecutingAssembly();
+      //var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
 
-      _liteMigrator = new LiteMigration(dbPath, resourceAssembly, resourceNamespace);
+      //_liteMigrator = new LiteMigration(dbPath, resourceAssembly, resourceNamespace);
     }
 
     private async void OnGetCurrentVersionAsync()
     {
-      var versions = _liteMigrator.Versions;
-
-      var sortedMigrations = _liteMigrator.Migrations.GetSortedMigrations();
-
-      _log.Debug("=======================");
-      _log.Debug("==[ All Migrations");
-      foreach (var mResource in sortedMigrations)
+      var dbPath = ":memory:";
+      var resourceAssembly = Assembly.GetExecutingAssembly();
+      var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
+      try
       {
-        var mig = mResource.Value;
+        _liteMigrator = new LiteMigration(dbPath, resourceAssembly, resourceNamespace);
 
-        _log.Debug("Script: " + mig.Script);
-        _log.Debug("Version Number: " + mig.VersionNumber);
-        _log.Debug("Applied Dttm: " + mig.AppliedDttm);
-        _log.Debug("Description: " + mig.Description);
-        _log.Debug("--------------");
+        var versions = _liteMigrator.Versions;
+        var applied = versions.AppliedMigrations();
+
+        _log.Debug("=======================");
+        _log.Debug("==[ Applied Migrations");
+        foreach (var migrationId in applied)
+        {
+          _log.Debug("Migration Id: " + migrationId);
+        }
+
+        var sortedMigrations = _liteMigrator.Migrations.GetSortedMigrations();
+
+        _log.Debug("=======================");
+        _log.Debug("==[ All Migrations");
+        foreach (var mResource in sortedMigrations)
+        {
+          var mig = mResource.Value;
+
+          _log.Debug("Script: " + mig.Script);
+          _log.Debug("Version Number: " + mig.VersionNumber);
+          _log.Debug("Applied Dttm: " + mig.AppliedDttm);
+          _log.Debug("Description: " + mig.Description);
+          _log.Debug("--------------");
+        }
+
+        _log.Debug("=======================");
+        _log.Debug("==[ Migrations Not Installed");
+        var notInstalled = await _liteMigrator.GetMissingMigrationsAsync();
+        foreach (var mResource in notInstalled)
+        {
+          var mig = mResource.Value;
+          _log.Debug("Script: " + mig.Script);
+          _log.Debug("Version Number: " + mig.VersionNumber);
+          _log.Debug("Applied Dttm: " + mig.AppliedDttm);
+          _log.Debug("Description: " + mig.Description);
+          _log.Debug("--------------");
+        }
       }
-
-      _log.Debug("=======================");
-      _log.Debug("==[ Migrations Not Installed");
-      var notInstalled = await _liteMigrator.GetMissingMigrationsAsync();
-      foreach (var mResource in notInstalled)
+      catch (Exception ex)
       {
-        var mig = mResource.Value;
-        _log.Debug("Script: " + mig.Script);
-        _log.Debug("Version Number: " + mig.VersionNumber);
-        _log.Debug("Applied Dttm: " + mig.AppliedDttm);
-        _log.Debug("Description: " + mig.Description);
-        _log.Debug("--------------");
+        ErrorMessage = ex.Message;
       }
     }
 
     private async void OnMigrateUpAsync()
     {
+      var dbPath = ":memory:";
+      var resourceAssembly = Assembly.GetExecutingAssembly();
+      var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
+
+      _liteMigrator = new LiteMigration(dbPath, resourceAssembly, resourceNamespace);
       bool success = await _liteMigrator.MigrateUpAsync();
       ErrorMessage = success ? "Installed" : "Error: " + _liteMigrator.LastError;
     }

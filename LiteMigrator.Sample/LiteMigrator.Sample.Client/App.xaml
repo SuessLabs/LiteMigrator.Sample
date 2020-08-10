@@ -21,6 +21,5 @@
       <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryColor}" />
       <Setter Property="BarTextColor" Value="{StaticResource TextColor}" />
     </Style>
-
   </Application.Resources>
 </prism:PrismApplication>
