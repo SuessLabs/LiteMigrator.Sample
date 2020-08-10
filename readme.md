@@ -4,7 +4,8 @@
 
 Sponsored by [Xeno Innovations](https://xenoinc.com), this project was made with nerd-love.
 
-**_This project is a Work in Progress_**
+![](docs/1-AvailableMigrations.png) ![](docs/2-NotInstalled.png) ![](docs/3-Installed.png)
+
 
 ## Use it in your project
 ⚠️ This is in beta - _NuGet package coming soon_, so we need your help to make this project better!
