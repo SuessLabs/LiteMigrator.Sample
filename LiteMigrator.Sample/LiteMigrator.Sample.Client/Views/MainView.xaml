@@ -3,22 +3,57 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prism="http://prismlibrary.com"
              x:Class="LiteMigrator.Sample.Client.Views.MainView"
              Title="{Binding Title}"
+             prism:ViewModelLocator.AutowireViewModel="True"
              mc:Ignorable="d">
 
   <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
     <Label FontSize="Large" Text="Welcome to LiteMigrator Sample!" />
 
-    <Button Command="{Binding CmdGetCurrentVersion}" Text="Get Current Migration Version" />
-    <Button Command="{Binding CmdMigrateUp}" Text="Apply Latest Migration(s)" />
+    <Button Command="{Binding CmdRemoveDatabase}" Text="Delete Database" />
+    <Button Command="{Binding CmdApplyMigrations}" Text="Apply Latest Migration(s)" />
 
+    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+      <Button Command="{Binding CmdGetAllMigrations}" Text="All" />
+      <Button Command="{Binding CmdGetInstalledMigrations}" Text="Installed" />
+      <Button Command="{Binding CmdGetMissingMigrations}" Text="Missing" />
+    </StackLayout>
+
+    <!--
     <StackLayout Orientation="Horizontal">
       <Label FontAttributes="Bold" Text="Version:" />
       <Label Text="{Binding LatestVersion}" />
     </StackLayout>
+    -->
 
-    <Label FontAttributes="Italic" Text="{Binding ErrorMessage}" />
+    <Label FontAttributes="Italic" Text="{Binding StatusMessage}" />
 
+    <Label Text="Installed Migration Scripts:" />
+    <ListView ItemsSource="{Binding MigrationsInstalled}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout Orientation="Vertical">
+              <Label Text="{Binding VersionNumber}" />
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+    <Label Text="Not Installed Migrations:" />
+    <ListView ItemsSource="{Binding MigrationsMissing}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout Orientation="Vertical">
+              <Label Text="{Binding VersionNumber}" />
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
   </StackLayout>
 </ContentPage>

@@ -1,40 +1,47 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using LiteMigrator.Sample.Client.Services;
 using Prism.Commands;
 using Prism.Navigation;
-using Prism.Services;
 using Xeno.LiteMigrator;
+using Xeno.LiteMigrator.DataObjects;
+using Xeno.LiteMigrator.Versioning;
 
 namespace LiteMigrator.Sample.Client.ViewModels
 {
   public class MainViewModel : ViewModelBase
   {
-    private IPageDialogService _dialogService;
     private string _errorMessage;
     private string _latestVersion;
     private LiteMigration _liteMigrator;
     private ILogService _log;
 
-    public MainViewModel(INavigationService nav, ILogService logService, IPageDialogService dialogService)
+    public MainViewModel(INavigationService nav, ILogService logService)
         : base(nav)
     {
       Title = "Main Page";
 
       _log = logService;
-      _dialogService = dialogService;
+
+      MigrationsAvailable = new ObservableCollection<IMigration>();
+      MigrationsMissing = new ObservableCollection<IMigration>();
+      MigrationsInstalled = new ObservableCollection<IVersionInfo>();
+
+      StatusMessage = string.Empty;
+      LatestVersion = string.Empty;
     }
 
-    public DelegateCommand CmdGetCurrentVersion => new DelegateCommand(OnGetCurrentVersionAsync);
+    public DelegateCommand CmdApplyMigrations => new DelegateCommand(OnApplyMigrationsAsync);
 
-    public DelegateCommand CmdMigrateUp => new DelegateCommand(OnMigrateUpAsync);
+    public DelegateCommand CmdGetAllMigrations => new DelegateCommand(OnGetAllMigrations);
 
-    public string ErrorMessage
-    {
-      get => _errorMessage;
-      set => SetProperty(ref _errorMessage, value);
-    }
+    public DelegateCommand CmdGetInstalledMigrations => new DelegateCommand(OnGetInstalledMigrationsAsync);
+
+    public DelegateCommand CmdGetMissingMigrations => new DelegateCommand(OnGetMissingMigrationsAsync);
+
+    public DelegateCommand CmdRemoveDatabase => new DelegateCommand(OnRemoveDatabase);
 
     public string LatestVersion
     {
@@ -42,72 +49,70 @@ namespace LiteMigrator.Sample.Client.ViewModels
       set => SetProperty(ref _latestVersion, value);
     }
 
-    public override void Initialize(INavigationParameters parameters)
+    public ObservableCollection<IMigration> MigrationsAvailable { get; set; }
+
+    public ObservableCollection<IVersionInfo> MigrationsInstalled { get; set; }
+
+    public ObservableCollection<IMigration> MigrationsMissing { get; set; }
+
+    public string StatusMessage
     {
-      base.Initialize(parameters);
-
-      //ErrorMessage = string.Empty;
-      //LatestVersion = string.Empty;
-
-      //var dbPath = ":memory:";
-      //var resourceAssembly = Assembly.GetExecutingAssembly();
-      //var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
-
-      //_liteMigrator = new LiteMigration(dbPath, resourceAssembly, resourceNamespace);
+      get => _errorMessage;
+      set => SetProperty(ref _errorMessage, value);
     }
 
     private string DatabasePath
     {
       get
       {
-        var path = ":memory:";
-        //var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-        //path = Path.Combine(path, "LiteMigratorTest.db3");
+        // var path = ":memory:";
+        var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+        path = Path.Combine(path, "LiteMigratorTest.db3");
 
         return path;
       }
     }
 
-    private async void OnGetCurrentVersionAsync()
+    public override void Initialize(INavigationParameters parameters)
+    {
+      base.Initialize(parameters);
+
+      var resourceAssembly = Assembly.GetExecutingAssembly();
+      var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
+
+      _liteMigrator = new LiteMigration(DatabasePath, resourceAssembly, resourceNamespace);
+    }
+
+    private async void OnApplyMigrationsAsync()
     {
       var resourceAssembly = Assembly.GetExecutingAssembly();
       var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
 
+      _liteMigrator = new LiteMigration(DatabasePath, resourceAssembly, resourceNamespace);
+      bool success = await _liteMigrator.MigrateUpAsync();
+      StatusMessage = success ? "Installed" : "Error: " + _liteMigrator.LastError;
+    }
+
+    /// <summary>
+    /// Gets a list of all available migration scripts whether they're installed yet or not.
+    /// </summary>
+    private void OnGetAllMigrations()
+    {
+      _log.Debug("==================");
+      _log.Debug("==[ All Migrations");
+
+      MigrationsMissing.Clear();
+
       try
       {
-        _liteMigrator = new LiteMigration(DatabasePath, resourceAssembly, resourceNamespace);
-
-        var versions = _liteMigrator.Versions;
-        var applied = versions.AppliedMigrations();
-
-        _log.Debug("=======================");
-        _log.Debug("==[ Applied Migrations");
-        foreach (var migrationId in applied)
-        {
-          _log.Debug("Migration Id: " + migrationId);
-        }
-
         var sortedMigrations = _liteMigrator.Migrations.GetSortedMigrations();
 
-        _log.Debug("=======================");
-        _log.Debug("==[ All Migrations");
         foreach (var mResource in sortedMigrations)
         {
-          var mig = mResource.Value;
+          IMigration mig = mResource.Value;
 
-          _log.Debug("Script: " + mig.Script);
-          _log.Debug("Version Number: " + mig.VersionNumber);
-          _log.Debug("Applied Dttm: " + mig.AppliedDttm);
-          _log.Debug("Description: " + mig.Description);
-          _log.Debug("--------------");
-        }
+          MigrationsMissing.Add(mig);
 
-        _log.Debug("=======================");
-        _log.Debug("==[ Migrations Not Installed");
-        var notInstalled = await _liteMigrator.GetMissingMigrationsAsync();
-        foreach (var mResource in notInstalled)
-        {
-          var mig = mResource.Value;
           _log.Debug("Script: " + mig.Script);
           _log.Debug("Version Number: " + mig.VersionNumber);
           _log.Debug("Applied Dttm: " + mig.AppliedDttm);
@@ -118,18 +123,91 @@ namespace LiteMigrator.Sample.Client.ViewModels
       catch (Exception ex)
       {
         _log.Error($"Error: {ex.Message}");
-        ErrorMessage = $"Error: {ex.Message}";
       }
+
+      StatusMessage = _liteMigrator.LastError;
     }
 
-    private async void OnMigrateUpAsync()
+    /// <summary>
+    /// Migration scripts installed and registered in the database
+    /// </summary>
+    private async void OnGetInstalledMigrationsAsync()
     {
-      var resourceAssembly = Assembly.GetExecutingAssembly();
-      var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
+      _log.Debug("========================");
+      _log.Debug("==[ Migrations Installed");
 
-      _liteMigrator = new LiteMigration(DatabasePath, resourceAssembly, resourceNamespace);
-      bool success = await _liteMigrator.MigrateUpAsync();
-      ErrorMessage = success ? "Installed" : "Error: " + _liteMigrator.LastError;
+      MigrationsInstalled.Clear();
+
+      try
+      {
+        var migs = await _liteMigrator.GetInstalledMigrationsAsync();
+
+        foreach (var verInfo in migs)
+        {
+          IVersionInfo mig = verInfo.Value;
+
+          MigrationsInstalled.Add(mig);
+
+          _log.Debug("Version Number: " + mig.VersionNumber);
+          _log.Debug("Applied Dttm: " + mig.AppliedDttm);
+          _log.Debug("Description: " + mig.Description);
+          _log.Debug("--------------");
+        }
+      }
+      catch (Exception ex)
+      {
+        _log.Error($"Error: {ex.Message}");
+      }
+
+      StatusMessage = _liteMigrator.LastError;
+    }
+
+    /// <summary>
+    /// List of migrations scripts not installed yet
+    /// </summary>
+    private async void OnGetMissingMigrationsAsync()
+    {
+      try
+      {
+        _log.Debug("============================");
+        _log.Debug("==[ Migrations Not Installed");
+
+        MigrationsMissing.Clear();
+
+        var notInstalled = await _liteMigrator.GetMissingMigrationsAsync();
+
+        foreach (var mResource in notInstalled)
+        {
+          IMigration mig = mResource.Value;
+
+          MigrationsMissing.Add(mig);
+
+          _log.Debug("Script: " + mig.Script);
+          _log.Debug("Version Number: " + mig.VersionNumber);
+          _log.Debug("Applied Dttm: " + mig.AppliedDttm);
+          _log.Debug("Description: " + mig.Description);
+          _log.Debug("--------------");
+        }
+      }
+      catch (Exception ex)
+      {
+        _log.Error($"Error: {ex.Message}");
+      }
+
+      StatusMessage = _liteMigrator.LastError;
+    }
+
+    private void OnRemoveDatabase()
+    {
+      MigrationsAvailable.Clear();
+      MigrationsInstalled.Clear();
+      MigrationsMissing.Clear();
+
+      if (File.Exists(DatabasePath))
+        File.Delete(DatabasePath);
+
+      StatusMessage = File.Exists(DatabasePath) ? "Failed to remove DB" : "DB Removed";
+      _log.Info(StatusMessage);
     }
 
     private void SampleDialog()
@@ -140,17 +218,6 @@ namespace LiteMigrator.Sample.Client.ViewModels
       ////_log.Warn("Warning message.");
       ////_log.Error("Error message.");
       ////_log.Fatal("Fatal-error message.");
-
-      // Dialog Sample:
-      //////  https://prismlibrary.com/docs/xamarin-forms/dialogs/page-dialog-service.html
-      ////var result = await _dialogService.DisplayAlertAsync("Alert", "Display a sample pop-up ActionSheet?", "Accept", "Cancel");
-      ////_log.Debug("Response: " + result);
-      ////
-      ////if (result)
-      ////{
-      ////  var action = await _dialogService.DisplayActionSheetAsync("Sample Action Sheet", "Cancel", null, "Email", "In-App message", "IG");
-      ////  _log.Debug("ActionSheet: " + action);
-      ////}
     }
   }
 }
