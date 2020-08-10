@@ -9,7 +9,7 @@ namespace LiteMigrator.Sample.UWP
     {
       this.InitializeComponent();
 
-      LoadApplication(new LiteMigrator.Sample.UWP.Client.App(new UwpInitializer()));
+      LoadApplication(new Client.App(new UwpInitializer()));
     }
   }
 
