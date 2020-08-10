@@ -30,13 +30,29 @@
 
     <Label FontAttributes="Italic" Text="{Binding StatusMessage}" />
 
+    <Label Text="Available Migrations:" />
+    <ListView ItemsSource="{Binding MigrationsAvailable}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <StackLayout Orientation="Horizontal">
+              <Label Text="{Binding VersionNumber}" />
+              <Label Text="{Binding Description}" />
+            </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
     <Label Text="Installed Migration Scripts:" />
     <ListView ItemsSource="{Binding MigrationsInstalled}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
-            <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal">
               <Label Text="{Binding VersionNumber}" />
+              <Label Text="{Binding AppliedDttm}" />
+              <Label Text="{Binding Description}" />
             </StackLayout>
           </ViewCell>
         </DataTemplate>
@@ -48,8 +64,9 @@
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
-            <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal">
               <Label Text="{Binding VersionNumber}" />
+              <Label Text="{Binding Description}" />
             </StackLayout>
           </ViewCell>
         </DataTemplate>

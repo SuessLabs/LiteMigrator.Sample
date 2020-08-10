@@ -101,7 +101,7 @@ namespace LiteMigrator.Sample.Client.ViewModels
       _log.Debug("==================");
       _log.Debug("==[ All Migrations");
 
-      MigrationsMissing.Clear();
+      MigrationsAvailable.Clear();
 
       try
       {
@@ -111,7 +111,7 @@ namespace LiteMigrator.Sample.Client.ViewModels
         {
           IMigration mig = mResource.Value;
 
-          MigrationsMissing.Add(mig);
+          MigrationsAvailable.Add(mig);
 
           _log.Debug("Script: " + mig.Script);
           _log.Debug("Version Number: " + mig.VersionNumber);
@@ -207,6 +207,8 @@ namespace LiteMigrator.Sample.Client.ViewModels
         File.Delete(DatabasePath);
 
       StatusMessage = File.Exists(DatabasePath) ? "Failed to remove DB" : "DB Removed";
+      StatusMessage += $" from {DatabasePath}";
+
       _log.Info(StatusMessage);
     }
 

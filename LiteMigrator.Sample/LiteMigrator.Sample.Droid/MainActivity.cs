@@ -7,7 +7,7 @@ using Prism.Ioc;
 namespace LiteMigrator.Sample.Droid
 {
   [Activity(
-    Label = "LiteMigrator Sample",
+    Label = "Lite Migrator Sample",
     Icon = "@mipmap/ic_launcher",
     Theme = "@style/MainTheme",
     MainLauncher = true,

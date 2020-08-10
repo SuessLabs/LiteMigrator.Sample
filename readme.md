@@ -2,9 +2,12 @@
 
 <img align="right" width="90" height="90" src="https://raw.githubusercontent.com/xenoinc/SQLiteMigrator/master/docs/logo.png">LiteMigrator Sample is an example project using, [LiteMigrator](https://github.com/xenoinc/LiteMigrator), a tiny cross-platform SQLite migration framework for .NET projects. This framework was built for use with Xamarin 🐒 projects, so it needs to be quick, simple and reliable when managing databases
 
+[![](https://img.shields.io/nuget/v/Xeno.LiteMigrator?color=blue)](https://www.nuget.org/packages/Xeno.LiteMigrator/)
+
 Sponsored by [Xeno Innovations](https://xenoinc.com), this project was made with nerd-love.
 
-**_This project is a Work in Progress_**
+![](docs/1-AvailableMigrations.png) ![](docs/2-NotInstalled.png) ![](docs/3-Installed.png)
+
 
 ## Use it in your project
 ⚠️ This is in beta - _NuGet package coming soon_, so we need your help to make this project better!
