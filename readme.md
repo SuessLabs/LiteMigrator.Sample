@@ -1,6 +1,6 @@
-# Lite Migrator for mobile devices
+# LiteMigrator Sample Project
 
-<img align="right" width="90" height="90" src="https://raw.githubusercontent.com/xenoinc/SQLiteMigrator/master/docs/logo.png">LiteMigrator is a tiny cross-platform SQLite migration framework for Xamarin (_.NET Standard_) inspired by [Fluent Migrator](https://github.com/fluentmigrator/fluentmigrator). This framework was built for use with Xamarin 🐒 projects, so it needs to be quick, simple and reliable when managing databases
+<img align="right" width="90" height="90" src="https://raw.githubusercontent.com/xenoinc/SQLiteMigrator/master/docs/logo.png">LiteMigrator Sample is an example project using, [LiteMigrator](https://github.com/xenoinc/LiteMigrator), a tiny cross-platform SQLite migration framework for .NET projects. This framework was built for use with Xamarin 🐒 projects, so it needs to be quick, simple and reliable when managing databases
 
 Sponsored by [Xeno Innovations](https://xenoinc.com), this project was made with nerd-love.
 

@@ -13,6 +13,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Scriptsd\**" />
+    <EmbeddedResource Remove="Scriptsd\**" />
+    <None Remove="Scriptsd\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\202001010000-BaseDDL.sql" />
+    <None Remove="Scripts\202008092359-Apply2ndMigration.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\202001010000-BaseDDL.sql" />
+    <EmbeddedResource Include="Scripts\202008092359-Apply2ndMigration.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.5.3.2" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />

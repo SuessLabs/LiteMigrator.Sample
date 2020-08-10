@@ -8,12 +8,17 @@
              mc:Ignorable="d">
 
   <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-    <Label Text="Welcome to Xamarin Forms and Prism!" />
+    <Label FontSize="Large" Text="Welcome to LiteMigrator Sample!" />
 
-    <Button Command="{Binding CmdSampleDialog}" Text="Sample Pop-up" />
+    <Button Command="{Binding CmdGetCurrentVersion}" Text="Get Current Migration Version" />
+    <Button Command="{Binding CmdMigrateUp}" Text="Apply Latest Migration(s)" />
 
-    <Button Command="{Binding CmdSampleLogging}" Text="Sample Logging" />
+    <StackLayout Orientation="Horizontal">
+      <Label FontAttributes="Bold" Text="Version:" />
+      <Label Text="{Binding LatestVersion}" />
+    </StackLayout>
+
+    <Label FontAttributes="Italic" Text="{Binding ErrorMessage}" />
 
   </StackLayout>
-
 </ContentPage>
