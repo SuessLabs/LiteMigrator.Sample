@@ -7,7 +7,7 @@ using Prism.Ioc;
 namespace LiteMigrator.Sample.Droid
 {
   [Activity(
-    Label = "XamarinTemplate",
+    Label = "LiteMigrator Sample",
     Icon = "@mipmap/ic_launcher",
     Theme = "@style/MainTheme",
     MainLauncher = true,

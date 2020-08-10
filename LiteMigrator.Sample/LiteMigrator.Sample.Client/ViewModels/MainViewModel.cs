@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using LiteMigrator.Sample.Client.Services;
 using Prism.Commands;
@@ -55,14 +56,26 @@ namespace LiteMigrator.Sample.Client.ViewModels
       //_liteMigrator = new LiteMigration(dbPath, resourceAssembly, resourceNamespace);
     }
 
+    private string DatabasePath
+    {
+      get
+      {
+        var path = ":memory:";
+        //var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+        //path = Path.Combine(path, "LiteMigratorTest.db3");
+
+        return path;
+      }
+    }
+
     private async void OnGetCurrentVersionAsync()
     {
-      var dbPath = ":memory:";
       var resourceAssembly = Assembly.GetExecutingAssembly();
       var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
+
       try
       {
-        _liteMigrator = new LiteMigration(dbPath, resourceAssembly, resourceNamespace);
+        _liteMigrator = new LiteMigration(DatabasePath, resourceAssembly, resourceNamespace);
 
         var versions = _liteMigrator.Versions;
         var applied = versions.AppliedMigrations();
@@ -104,17 +117,17 @@ namespace LiteMigrator.Sample.Client.ViewModels
       }
       catch (Exception ex)
       {
-        ErrorMessage = ex.Message;
+        _log.Error($"Error: {ex.Message}");
+        ErrorMessage = $"Error: {ex.Message}";
       }
     }
 
     private async void OnMigrateUpAsync()
     {
-      var dbPath = ":memory:";
       var resourceAssembly = Assembly.GetExecutingAssembly();
       var resourceNamespace = "LiteMigrator.Sample.Client.Scripts";
 
-      _liteMigrator = new LiteMigration(dbPath, resourceAssembly, resourceNamespace);
+      _liteMigrator = new LiteMigration(DatabasePath, resourceAssembly, resourceNamespace);
       bool success = await _liteMigrator.MigrateUpAsync();
       ErrorMessage = success ? "Installed" : "Error: " + _liteMigrator.LastError;
     }

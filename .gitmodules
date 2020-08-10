@@ -1,0 +1,3 @@
+[submodule "tools/LiteMigrator"]
+	path = tools/LiteMigrator
+	url = https://github.com/xenoinc/LiteMigrator.git
