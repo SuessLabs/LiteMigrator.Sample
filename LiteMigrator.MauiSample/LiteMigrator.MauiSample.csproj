@@ -69,11 +69,14 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 		<PackageReference Include="Prism.DryIoc.Maui" Version="9.0.537" />
-		<PackageReference Include="Xeno.LiteMigrator" Version="0.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="Xeno.LiteMigrator" Version="0.6.0" />-->
+    <ProjectReference Include="..\lib\LiteMigrator\source\LiteMigrator\Xeno.LiteMigrator.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\LiteMigrator.Sample.Common\LiteMigrator.Sample.Common.csproj" />
-	</ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\LiteMigrator.Sample.Common\LiteMigrator.Sample.Common.csproj" />
+  </ItemGroup>
 </Project>

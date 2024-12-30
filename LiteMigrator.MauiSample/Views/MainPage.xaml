@@ -7,11 +7,12 @@
              x:DataType="vm:MainPageViewModel"
              Title="{Binding Title}">
   <ScrollView>
-    <VerticalStackLayout HorizontalOptions="CenterAndExpand"
+    <VerticalStackLayout Margin="10"
+                         HorizontalOptions="CenterAndExpand"
                          Spacing="5"
                          VerticalOptions="CenterAndExpand">
 
-      <Label Text="SQLite LiteMigrator!" FontSize="Large" />
+      <Label Text="SQLite LiteMigrator!" HorizontalOptions="Center" FontSize="Large" />
 
       <Image Source="logo.png"
              Aspect="AspectFit"
@@ -38,44 +39,56 @@
 
       <Label Text="{Binding StatusMessage}" FontAttributes="Italic" />
 
-      <Label Text="Available Migrations:" />
-      <ListView ItemsSource="{Binding MigrationsAvailable}">
+      <Label Text="Available Migrations:" FontAttributes="Bold" />
+      <ListView Margin="5" ItemsSource="{Binding MigrationsAvailable}">
         <ListView.ItemTemplate>
           <DataTemplate x:DataType="mig:VersionInfo">
             <ViewCell>
-              <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding VersionNumber}" />
-                <Label Text="{Binding Description}" />
-              </StackLayout>
+              <Label>
+                <Label.Text>
+                  <MultiBinding StringFormat="{}{0} - {1}">
+                    <Binding Path="VersionNumber" />
+                    <Binding Path="Description" />
+                  </MultiBinding>
+                </Label.Text>
+              </Label>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
 
-      <Label Text="Installed Migration Scripts:" />
-      <ListView ItemsSource="{Binding MigrationsInstalled}">
+      <Label Text="Installed Migration Scripts:" FontAttributes="Bold" />
+      <ListView Margin="5" ItemsSource="{Binding MigrationsInstalled}">
         <ListView.ItemTemplate>
           <DataTemplate x:DataType="mig:VersionInfo">
             <ViewCell>
-              <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding VersionNumber}" />
-                <Label Text="{Binding AppliedDttm}" />
-                <Label Text="{Binding Description}" />
-              </StackLayout>
+              <Label>
+                <Label.Text>
+                  <MultiBinding StringFormat="{}{0} - {1}">
+                    <Binding Path="VersionNumber" />
+                    <Binding Path="AppliedDttm" />
+                    <Binding Path="Description" />
+                  </MultiBinding>
+                </Label.Text>
+              </Label>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
 
-      <Label Text="Not Installed Migrations:" />
-      <ListView ItemsSource="{Binding MigrationsMissing}">
+      <Label Text="Not Installed Migrations:" FontAttributes="Bold" />
+      <ListView Margin="5" ItemsSource="{Binding MigrationsMissing}">
         <ListView.ItemTemplate>
           <DataTemplate x:DataType="mig:VersionInfo">
             <ViewCell>
-              <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding VersionNumber}" />
-                <Label Text="{Binding Description}" />
-              </StackLayout>
+              <Label>
+                <Label.Text>
+                  <MultiBinding StringFormat="{}{0} - {1}">
+                    <Binding Path="VersionNumber" />
+                    <Binding Path="Description" />
+                  </MultiBinding>
+                </Label.Text>
+              </Label>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
