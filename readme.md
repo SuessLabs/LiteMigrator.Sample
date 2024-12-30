@@ -6,7 +6,7 @@
 
 [LiteMigrator](https://github.com/xenoinc/LiteMigrator) takes a "migrate-up" approach. In most applications, we only move forward and rarely downgrade. This helps keep the library small and nimble.
 
-[![](https://img.shields.io/nuget/v/Xeno.LiteMigrator?color=blue)](https://www.nuget.org/packages/Xeno.LiteMigrator/)
+Download Package: [![](https://img.shields.io/nuget/v/LiteMigrator?color=blue)](https://www.nuget.org/packages/LiteMigrator/)
 
 Sponsored by [Xeno Innovations](https://xenoinc.com) and [Suess Labs](https://suesslabs.com), this project was made with nerd-love.
 
@@ -15,7 +15,7 @@ Sponsored by [Xeno Innovations](https://xenoinc.com) and [Suess Labs](https://su
 
 ## Use it in your project
 
-Get [LiteMigrator](https://www.nuget.org/packages/Xeno.LiteMigrator) on NuGet today!
+Get [LiteMigrator](https://www.nuget.org/packages/LiteMigrator) on NuGet today!
 
 ### Building the Sample
 
