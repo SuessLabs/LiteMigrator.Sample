@@ -10,9 +10,15 @@ Sponsored by [Xeno Innovations](https://xenoinc.com), this project was made with
 
 
 ## Use it in your project
+
 Get [LiteMigrator](https://www.nuget.org/packages/Xeno.LiteMigrator) on NuGet today!
 
-### Getting Started
+### Building the Sample
+
+1. `git submodule update --init --recursive`
+
+## Getting Started
+
 Detailed instructions can be found on the [Using LiteMigrator](https://github.com/xenoinc/SQLiteMigrator/wiki/Using-LiteMigrator) wiki page.
 
 1. Add **LiteMigrator** project to your solution
@@ -35,6 +41,7 @@ public async Task InstallMigrationsAsync()
 ```
 
 ## How to Contribute
+
 Give it a test drive and support making LiteMigrator better :)
 
 1. Fork on GitHub

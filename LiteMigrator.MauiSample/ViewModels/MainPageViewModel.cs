@@ -58,7 +58,12 @@ public class MainPageViewModel : ViewModelBase
   private string GetDatabasePath()
   {
     // var path = ":memory:";
+#if WINDOWS
+    var path = Microsoft.Maui.Storage.FileSystem.Current.AppDataDirectory;
+#else
     var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+#endif
+
     path = Path.Combine(path, "LiteMigratorTest.db3");
 
     return path;
@@ -76,9 +81,17 @@ public class MainPageViewModel : ViewModelBase
   {
     using var migrator = InitLiteMigrator();
 
-    bool success = await migrator.MigrateUpAsync();
+    try
+    {
+      bool success = await migrator.MigrateUpAsync();
+      StatusMessage = success ? "Installed" : "Error: " + migrator.LastError;
+    }
+    catch(Exception ex)
+    {
+      _log.Error(ex.Message);
 
-    StatusMessage = success ? "Installed" : "Error: " + migrator.LastError;
+      StatusMessage = $"Error! {migrator.LastError}";
+    }
   }
 
   /// <summary>
