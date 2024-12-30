@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\202001010000-BaseDDL.sql" />
+    <None Remove="Scripts\202008092359-Apply2ndMigration.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\202001010000-BaseDDL.sql" />
+    <EmbeddedResource Include="Scripts\202008092359-Apply2ndMigration.sql" />
+  </ItemGroup>
+
+</Project>
