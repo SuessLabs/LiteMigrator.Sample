@@ -1,6 +1,10 @@
 # LiteMigrator Sample Project
 
-<img align="right" width="90" height="90" src="https://raw.githubusercontent.com/xenoinc/SQLiteMigrator/master/docs/logo.png">LiteMigrator Sample is an example project using, [LiteMigrator](https://github.com/xenoinc/LiteMigrator), a tiny cross-platform SQLite migration framework for .NET projects. This framework was built for use with Xamarin 🐒 projects, so it needs to be quick, simple and reliable when managing databases
+[![](https://raw.githubusercontent.com/xenoinc/LiteMigrator/master/docs/logo.png)]()
+
+LiteMigrator is a tiny cross-platform SQLite migration framework for .NET cross-platform applications using (_.NET Standard_). This library was built for use with .NET MAUI 🐒, Avalonia, and Uno projects. So it needs to be quick, simple and reliable when managing databases.
+
+LiteMigrator takes a "migrate-up" approach. In most applications, we only move forward and rarely downgrade. This helps keep the library small and nimble.
 
 [![](https://img.shields.io/nuget/v/Xeno.LiteMigrator?color=blue)](https://www.nuget.org/packages/Xeno.LiteMigrator/)
 
@@ -16,16 +20,34 @@ Get [LiteMigrator](https://www.nuget.org/packages/Xeno.LiteMigrator) on NuGet to
 ### Building the Sample
 
 1. `git submodule update --init --recursive`
+2. Run the `LiteMigrator.MauiSample` on your favorite platform!
+   * Windows, Android, iOS, or Mac!
 
 ## Getting Started
 
-Detailed instructions can be found on the [Using LiteMigrator](https://github.com/xenoinc/SQLiteMigrator/wiki/Using-LiteMigrator) wiki page.
+Detailed instructions can be found on the [Using LiteMigrator](https://github.com/xenoinc/LiteMigrator/wiki/Using-LiteMigrator) wiki page.
 
 1. Add **LiteMigrator** project to your solution
 2. Create a folder in your solution to hold the scripts
 3. Add SQL files as **Embedded Resources**
   * You must use the naming convention, "_YYYYMMDDhhmm-FileName.sql_"
 4. Wire-up the controller
+
+### Use Case 1
+
+```cs
+  var scriptNamespace = "MyProject.Namespace.Scripts";
+
+  using (var migrator = new LiteMigration(
+    "c:\\path\\to\\sqlite.db3"
+    Assembly.GetExecutingAssembly(),
+    scriptNamespace))
+  {
+    bool isSuccessful = await migrator.MigrateUpAsync();
+  }
+```
+
+### Use Case 2 - Class Constructor
 
 ```cs
 public async Task InstallMigrationsAsync()
@@ -37,6 +59,9 @@ public async Task InstallMigrationsAsync()
 
   var liteMig = new LiteMigration(dbPath, resourceAssm, migsNamespace);
   bool = success = await liteMig.MigrateUpAsync();
+
+  // Required after v0.6
+  liteMig.Dispose();
 }
 ```
 
