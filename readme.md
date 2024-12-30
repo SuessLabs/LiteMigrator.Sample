@@ -2,13 +2,13 @@
 
 [![](https://raw.githubusercontent.com/xenoinc/LiteMigrator/master/docs/logo.png)]()
 
-LiteMigrator is a tiny cross-platform SQLite migration framework for .NET cross-platform applications using (_.NET Standard_). This library was built for use with .NET MAUI 🐒, Avalonia, and Uno projects. So it needs to be quick, simple and reliable when managing databases.
+[LiteMigrator](https://github.com/xenoinc/LiteMigrator) is a tiny cross-platform SQLite migration framework for .NET cross-platform applications using (_.NET Standard_). This library was built for use with .NET MAUI 🐒, Avalonia, and Uno projects. So it needs to be quick, simple and reliable when managing databases.
 
-LiteMigrator takes a "migrate-up" approach. In most applications, we only move forward and rarely downgrade. This helps keep the library small and nimble.
+[LiteMigrator](https://github.com/xenoinc/LiteMigrator) takes a "migrate-up" approach. In most applications, we only move forward and rarely downgrade. This helps keep the library small and nimble.
 
 [![](https://img.shields.io/nuget/v/Xeno.LiteMigrator?color=blue)](https://www.nuget.org/packages/Xeno.LiteMigrator/)
 
-Sponsored by [Xeno Innovations](https://xenoinc.com), this project was made with nerd-love.
+Sponsored by [Xeno Innovations](https://xenoinc.com) and [Suess Labs](https://suesslabs.com), this project was made with nerd-love.
 
 ![](docs/1-AvailableMigrations.png) ![](docs/2-NotInstalled.png) ![](docs/3-Installed.png)
 
