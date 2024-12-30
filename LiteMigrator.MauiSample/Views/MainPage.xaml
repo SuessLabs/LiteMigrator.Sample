@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mig="clr-namespace:Xeno.LiteMigrator.DataObjects;assembly=Xeno.LiteMigrator"
+             xmlns:vm="clr-namespace:LiteMigrator.MauiSample.ViewModels"
+             x:Class="LiteMigrator.MauiSample.Views.MainPage"
+             x:DataType="vm:MainPageViewModel"
+             Title="{Binding Title}">
+  <ScrollView>
+    <VerticalStackLayout HorizontalOptions="CenterAndExpand"
+                         Spacing="5"
+                         VerticalOptions="CenterAndExpand">
+
+      <Label Text="SQLite LiteMigrator!" FontSize="Large" />
+
+      <Image Source="logo.png"
+             Aspect="AspectFit"
+             HeightRequest="100"
+             SemanticProperties.Description="SQLite LiteMigrator by Xeno Innovations" />
+
+      <Button Text="Delete Database" Command="{Binding CmdRemoveDatabase}" />
+      <Button Text="Apply Latest Migration(s)" Command="{Binding CmdApplyMigrations}" />
+
+      <StackLayout HorizontalOptions="Center"
+                   Orientation="Horizontal"
+                   Spacing="5">
+        <Button Text="All" Command="{Binding CmdGetAllMigrations}" />
+        <Button Text="Installed" Command="{Binding CmdGetInstalledMigrations}" />
+        <Button Text="Missing" Command="{Binding CmdGetMissingMigrations}" />
+      </StackLayout>
+
+      <!--
+      <StackLayout Orientation="Horizontal">
+        <Label FontAttributes="Bold" Text="Version:" />
+        <Label Text="{Binding LatestVersion}" />
+      </StackLayout>
+      -->
+
+      <Label Text="{Binding StatusMessage}" FontAttributes="Italic" />
+
+      <Label Text="Available Migrations:" />
+      <ListView ItemsSource="{Binding MigrationsAvailable}">
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="mig:VersionInfo">
+            <ViewCell>
+              <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding VersionNumber}" />
+                <Label Text="{Binding Description}" />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <Label Text="Installed Migration Scripts:" />
+      <ListView ItemsSource="{Binding MigrationsInstalled}">
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="mig:VersionInfo">
+            <ViewCell>
+              <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding VersionNumber}" />
+                <Label Text="{Binding AppliedDttm}" />
+                <Label Text="{Binding Description}" />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <Label Text="Not Installed Migrations:" />
+      <ListView ItemsSource="{Binding MigrationsMissing}">
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="mig:VersionInfo">
+            <ViewCell>
+              <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding VersionNumber}" />
+                <Label Text="{Binding Description}" />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>
