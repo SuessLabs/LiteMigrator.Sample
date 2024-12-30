@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteMigrator.MauiSample", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteMigrator.Sample.Common", "LiteMigrator.Sample.Common\LiteMigrator.Sample.Common.csproj", "{513EF216-CBE1-4CBE-A573-7C60B3888AC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xeno.LiteMigrator", "lib\LiteMigrator\source\LiteMigrator\Xeno.LiteMigrator.csproj", "{A64C3776-5B89-4F6F-8732-C263A9E9E8C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteMigrator", "lib\LiteMigrator\source\LiteMigrator\LiteMigrator.csproj", "{A64C3776-5B89-4F6F-8732-C263A9E9E8C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

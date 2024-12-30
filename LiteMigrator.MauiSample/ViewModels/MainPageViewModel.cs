@@ -2,12 +2,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
+using LiteMigrator.DataObjects;
 using LiteMigrator.MauiSample.Services;
+using LiteMigrator.Versioning;
 using Prism.Commands;
 using Prism.Navigation;
-using Xeno.LiteMigrator;
-using Xeno.LiteMigrator.DataObjects;
-using Xeno.LiteMigrator.Versioning;
 
 namespace LiteMigrator.MauiSample.ViewModels;
 
@@ -86,7 +85,7 @@ public class MainPageViewModel : ViewModelBase
       bool success = await migrator.MigrateUpAsync();
       StatusMessage = success ? "Installed" : "Error: " + migrator.LastError;
     }
-    catch(Exception ex)
+    catch (Exception ex)
     {
       _log.Error(ex.Message);
 
@@ -215,7 +214,7 @@ public class MainPageViewModel : ViewModelBase
       if (File.Exists(GetDatabasePath()))
         File.Delete(GetDatabasePath());
     }
-    catch(Exception ex)
+    catch (Exception ex)
     {
       _log.Error(ex.Message);
     }
