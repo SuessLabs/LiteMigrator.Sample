@@ -50,8 +50,6 @@ public class MainPageViewModel : ViewModelBase
   public override void Initialize(INavigationParameters parameters)
   {
     base.Initialize(parameters);
-
-    InitLiteMigrator();
   }
 
   private string GetDatabasePath()
@@ -70,10 +68,9 @@ public class MainPageViewModel : ViewModelBase
 
   private LiteMigration InitLiteMigrator()
   {
-    var resourceAssembly = Assembly.GetExecutingAssembly();
     var resourceNamespace = "LiteMigrator.MauiSample.Scripts";
 
-    return new LiteMigration(GetDatabasePath(), resourceAssembly, resourceNamespace);
+    return new LiteMigration(GetDatabasePath(), resourceNamespace, Assembly.GetExecutingAssembly());
   }
 
   private async void OnApplyMigrationsAsync()
