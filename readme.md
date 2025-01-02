@@ -10,6 +10,8 @@ LiteMigrator is a tiny cross-platform SQLite migration framework for .NET cross-
 [![](https://img.shields.io/nuget/v/LiteMigrator?color=blue)](https://www.nuget.org/packages/LiteMigrator/)
 [![LiteMigrator Docs](https://img.shields.io/badge/docs-litemigrator-blue.svg)](https://github.com/SuessLabs/LiteMigrator/wiki)
 
+![](docs/1-AvailableMigrations.png) ![](docs/2-NotInstalled.png) ![](docs/3-Installed.png)
+
 > Breaking Change from 0.6.x to now:
 >
 > Namespace changed from `Xeno.LiteMigrator` to `LiteMigrator`
