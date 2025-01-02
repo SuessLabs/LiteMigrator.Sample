@@ -18,9 +18,11 @@ LiteMigrator is a tiny cross-platform SQLite migration framework for .NET cross-
 
 Brought to you with nerd-love by [Suess Labs](https://suesslabs.com), sponsored by [Xeno Innovations](https://xenoinc.com).
 
-## Supported Platforms
+## Saving files
 
-Check out the sample project's source code [LiteMigrator.Sample](https://github.com/SuessLabs/LiteMigrator.Sample)
+Check out the .NET MAUI article on [file system helpers](https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/file-system-helpers) for where you can store your files.
+
+## Platforms Supported
 
 | Platform | Status |
 |----------|--------|

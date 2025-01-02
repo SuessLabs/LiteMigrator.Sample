@@ -16,6 +16,7 @@ public class MainPageViewModel : ViewModelBase
   private string _errorMessage = string.Empty;
   private string _latestVersion = string.Empty;
   private LogService _log;
+  private bool _useExternalScripts;
 
   public MainPageViewModel(INavigationService navigationService, LogService log)
     : base(navigationService)
@@ -48,6 +49,9 @@ public class MainPageViewModel : ViewModelBase
 
   public string StatusMessage { get => _errorMessage; set => SetProperty(ref _errorMessage, value); }
 
+  /// <summary>Load migration scripts from external DLL (LiteMigrator.Sample.Common).</summary>
+  public bool UseExternalScripts { get => _useExternalScripts; set => SetProperty(ref _useExternalScripts, value); }
+
   public override void Initialize(INavigationParameters parameters)
   {
     base.Initialize(parameters);
@@ -55,13 +59,9 @@ public class MainPageViewModel : ViewModelBase
 
   private string GetDatabasePath()
   {
-    // var path = ":memory:";
-#if WINDOWS
-    var path = Microsoft.Maui.Storage.FileSystem.Current.AppDataDirectory;
-#else
+    //// var path = ":memory:";
     //// var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
     var path = FileSystem.AppDataDirectory;
-#endif
 
     path = Path.Combine(path, "LiteMigratorTest.db3");
 
@@ -70,9 +70,23 @@ public class MainPageViewModel : ViewModelBase
 
   private LiteMigration InitLiteMigrator()
   {
-    var resourceNamespace = "LiteMigrator.MauiSample.Scripts";
+    // Scripts from main project
+    if (!UseExternalScripts)
+    {
+      var assm = Assembly.GetExecutingAssembly();
+      var resourceNamespace = "LiteMigrator.MauiSample.Scripts";
+      return new LiteMigration(GetDatabasePath(), resourceNamespace, assm);
+    }
+    else
+    {
+      // Perform migrations from external project
+      return LiteMigrator.Sample.Common.MigrationRunner.InitLiteMigrator(GetDatabasePath());
 
-    return new LiteMigration(GetDatabasePath(), resourceNamespace, Assembly.GetExecutingAssembly());
+      // Otherwise, it gets messy and unstable doing the following
+      // because .NET's AOT will remove the "unused" assembly file.
+      ////var allAssms = AppDomain.CurrentDomain.GetAssemblies();
+      ////assm = allAssms.Where(x => x.FullName.Contains("LiteMigrator.Sample.Common")).FirstOrDefault(assm);
+    }
   }
 
   private async void OnApplyMigrationsAsync()

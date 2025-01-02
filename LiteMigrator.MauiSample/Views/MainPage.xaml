@@ -12,7 +12,9 @@
                          Spacing="5"
                          VerticalOptions="CenterAndExpand">
 
-      <Label Text="SQLite LiteMigrator!" HorizontalOptions="Center" FontSize="Large" />
+      <Label Text="SQLite LiteMigrator!"
+             FontSize="Large"
+             HorizontalOptions="Center" />
 
       <Image Source="logo.png"
              Aspect="AspectFit"
@@ -21,6 +23,13 @@
 
       <Button Text="Delete Database" Command="{Binding CmdRemoveDatabase}" />
       <Button Text="Apply Latest Migration(s)" Command="{Binding CmdApplyMigrations}" />
+
+      <StackLayout HorizontalOptions="Center"
+                   Orientation="Horizontal"
+                   Spacing="5">
+        <Label Text="Use External DLL:" VerticalOptions="Center" />
+        <CheckBox IsChecked="{Binding UseExternalScripts}" />
+      </StackLayout>
 
       <StackLayout HorizontalOptions="Center"
                    Orientation="Horizontal"
