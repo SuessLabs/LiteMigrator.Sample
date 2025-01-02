@@ -68,14 +68,14 @@ public class MainPageViewModel : ViewModelBase
     return path;
   }
 
-  private LiteMigration InitLiteMigrator()
+  private Migrator InitLiteMigrator()
   {
     // Scripts from main project
     if (!UseExternalScripts)
     {
       var assm = Assembly.GetExecutingAssembly();
       var resourceNamespace = "LiteMigrator.MauiSample.Scripts";
-      return new LiteMigration(GetDatabasePath(), resourceNamespace, assm);
+      return new Migrator(GetDatabasePath(), resourceNamespace, assm);
     }
     else
     {
