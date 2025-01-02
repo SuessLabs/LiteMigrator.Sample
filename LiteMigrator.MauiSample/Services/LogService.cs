@@ -41,9 +41,11 @@ public class LogService
       return;
     }
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
     string cls = trace.GetMethod().ReflectedType.Name;
     string method = trace.GetMethod().Name;
     string text = $"[{FormattedTime}] [{level}] [{cls}.{method}] [{message}]";
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
     System.Diagnostics.Debug.WriteLine(">> " + text);
   }

@@ -5,6 +5,7 @@ using System.Reflection;
 using LiteMigrator.DataObjects;
 using LiteMigrator.MauiSample.Services;
 using LiteMigrator.Versioning;
+using Microsoft.Maui.Storage;
 using Prism.Commands;
 using Prism.Navigation;
 
@@ -58,7 +59,8 @@ public class MainPageViewModel : ViewModelBase
 #if WINDOWS
     var path = Microsoft.Maui.Storage.FileSystem.Current.AppDataDirectory;
 #else
-    var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+    //// var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+    var path = FileSystem.AppDataDirectory;
 #endif
 
     path = Path.Combine(path, "LiteMigratorTest.db3");

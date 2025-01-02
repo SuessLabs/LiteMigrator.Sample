@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteMigrator.Sample.Common"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteMigrator", "lib\LiteMigrator\source\LiteMigrator\LiteMigrator.csproj", "{A64C3776-5B89-4F6F-8732-C263A9E9E8C5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{4BB5CE78-46B3-4325-932B-354E8A0A5D08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteMigrator.SystemTests", "lib\LiteMigrator\source\LiteMigrator.Tests\LiteMigrator.SystemTests.csproj", "{FAEECAA3-4B64-46A6-AAEF-995360F4081E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,8 +33,16 @@ Global
 		{A64C3776-5B89-4F6F-8732-C263A9E9E8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A64C3776-5B89-4F6F-8732-C263A9E9E8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A64C3776-5B89-4F6F-8732-C263A9E9E8C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAEECAA3-4B64-46A6-AAEF-995360F4081E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAEECAA3-4B64-46A6-AAEF-995360F4081E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAEECAA3-4B64-46A6-AAEF-995360F4081E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAEECAA3-4B64-46A6-AAEF-995360F4081E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A64C3776-5B89-4F6F-8732-C263A9E9E8C5} = {4BB5CE78-46B3-4325-932B-354E8A0A5D08}
+		{FAEECAA3-4B64-46A6-AAEF-995360F4081E} = {4BB5CE78-46B3-4325-932B-354E8A0A5D08}
 	EndGlobalSection
 EndGlobal
