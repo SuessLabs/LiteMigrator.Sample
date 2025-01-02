@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Scripts\202001010000-BaseDDL.sql" />
-    <None Remove="Scripts\202008092359-Apply2ndMigration.sql" />
+    <EmbeddedResource Include="Scripts\202412312359-BaseDDL.sql" />
+    <EmbeddedResource Include="Scripts\202501012345-Apply2ndMigration.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\202001010000-BaseDDL.sql" />
-    <EmbeddedResource Include="Scripts\202008092359-Apply2ndMigration.sql" />
+    <ProjectReference Include="..\lib\LiteMigrator\source\LiteMigrator\LiteMigrator.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,17 +9,17 @@
 --   SyncUpdatedDttm] DATETIME NOT NULL,
 --   SyncIsDeleted BIT NOT NULL DEFAULT(0)  -- Is marked for deletion (if possible)
 
-CREATE TABLE Sync (
+CREATE TABLE Sync2 (
   [Id] VARCHAR(36) PRIMARY KEY NOT NULL,
   [TableName] VARCHAR(128) NOT NULL,
   [UpdatedHash] VARCHAR(128) NOT NULL,
   [LastUpdateDttm] DATETIME NOT NULL
 );
 
-CREATE UNIQUE INDEX UIDX_Sync_TableName ON Sync(TableName);
+CREATE UNIQUE INDEX UIDX_Sync2_TableName ON Sync2(TableName);
 
 -- Customer account
-CREATE TABLE Account (
+CREATE TABLE Account2 (
   [Id] VARCHAR(36) PRIMARY KEY NOT NULL,
   [OrganizationName] VARCHAR(128) NOT NULL,
   [ContactName] VARCHAR(128) NOT NULL,
@@ -33,12 +33,12 @@ CREATE TABLE Account (
   [RegistrationDttm] DATETIME NULL      -- Last synced DTTM
 );
 
-CREATE UNIQUE INDEX UIDX_Account_OrganizationName ON Account(OrganizationName);
+CREATE UNIQUE INDEX UIDX_Account2_OrganizationName ON Account2(OrganizationName);
 
-CREATE TABLE PaymentType (
+CREATE TABLE PaymentType2 (
   [Id] VARCHAR(36) PRIMARY KEY NOT NULL,
   [Name] VARCHAR(128) NOT NULL,
   [Description] VARCHAR(128) NOT NULL
 );
 
-CREATE UNIQUE INDEX UIDX_PaymentType_Name ON PaymentType(Name);
+CREATE UNIQUE INDEX UIDX_PaymentType2_Name ON PaymentType2(Name);
